@@ -1,78 +1,121 @@
 # Selection Sort - Assignment 2
+# 🧩 Selection Sort Performance Analysis
 
-## Project Overview
-This project implements the **Selection Sort** algorithm in Java as part of Assignment 2 for Algorithmic Analysis and Peer Code Review.  
-It is designed to meet the assignment requirements for code quality, performance tracking, and testing.
-
-Key features:
-- **Selection Sort** implementation with early termination optimization for nearly-sorted arrays
-- **Performance tracking**: counts comparisons, swaps, and array accesses via `PerformanceTracker`
-- **Command-line benchmarking** through `BenchmarkRunner` for arrays of different sizes
-- **JUnit5 unit tests** covering edge cases:
-  - empty array
-  - single-element array
-  - sorted array
-  - reverse-sorted array
-  - random array
-- Input validation to handle `null` or small arrays
-- Ready for **peer code review** and empirical performance validation
+## 📘 Project Overview
+This project implements and evaluates the **Selection Sort** algorithm as part of the **Algorithm Performance Benchmarking Assignment**.  
+It includes:
+- A clean implementation of Selection Sort with **early termination optimization**.  
+- **Performance tracking** for comparisons, swaps, and array accesses.  
+- A **command-line benchmarking tool** for testing multiple input types and array sizes.  
+- **JUnit 5 tests** for algorithm correctness.
 
 ---
 
-## Project Structure
+## 🧠 Algorithm Description
+**Selection Sort** repeatedly finds the smallest element from the unsorted portion of an array and moves it to its correct position.  
+This implementation introduces an **early exit** optimization that terminates if the array becomes sorted before completing all passes.
 
-assignment2-selection-sort/
-├── src/main/java/algorithms/SelectionSort.java # Selection Sort implementation
-├── src/main/java/metrics/PerformanceTracker.java # Tracks comparisons, swaps, and array accesses
-├── src/main/java/cli/BenchmarkRunner.java # CLI for running benchmarks
-├── src/test/java/algorithms/SelectionSortTest.java # Unit tests for Selection Sort
-├── pom.xml # Maven project configuration
-├── README.md # Project documentation
-└── docs/ # Analysis reports and performance plots
+### 🔹 Complexity
+| Case | Time Complexity | Space Complexity |
+|------|------------------|------------------|
+| Best | Ω(n²)            | O(1) (in-place) |
+| Average | Θ(n²)         | O(1)            |
+| Worst | O(n²)           | O(1)            |
+
+---
+
+## 🧾 Features
+✅ Tracks comparisons, swaps, and array accesses  
+✅ Early termination when already sorted  
+✅ Benchmarking across data distributions:
+- Random
+- Sorted
+- Reversed  
+✅ Generates **CSV output** for further analysis  
+✅ Modular design (Algorithms / Metrics / CLI / Tests)  
+✅ Documented with **Javadoc** and follows Java coding standards
+
+---
+
+## 🗂️ Project Structure
+
+project-root/
+│
+├── src/
+│ ├── algorithms/
+│ │ └── SelectionSort.java
+│ │
+│ ├── metrics/
+│ │ └── PerformanceTracker.java
+│ │
+│ ├── cli/
+│ │ └── BenchmarkRunner.java
+│ │
+│ └── test/
+│ └── algorithms/
+│ └── SelectionSortTest.java
+│
+├── docs/
+│ └── performance_data.csv # Generated automatically after running BenchmarkRunner
+│
+├── README.md
+└── pom.xml (if using Maven)
 
 
 ---
 
-## Getting Started
+## ⚙️ Setup & Run Instructions
 
-### Prerequisites
-- **Java 17** or higher
-- **Maven 3.8+**
+### ▶️ Run via Command Line
+Compile and run the benchmark:
 
-### Running Unit Tests
-Compile and run all unit tests:
 ```bash
+javac -d out $(find src -name "*.java")
+java -cp out cli.BenchmarkRunner
+
+This will generate a file:
+
+docs/performance_data.csv
+
+containing performance results such as:
+
+ArraySize,DataType,Time_ms,Comparisons,Swaps,ArrayAccesses
+100,Random,1.242,4950,99,9900
+...
+
+🧪 Run Unit Tests (JUnit 5)
+
+If using Maven, include the JUnit dependency in pom.xml and run:
+
 mvn test
 
-This verifies correctness for all edge cases and ensures that the implementation behaves as expected.
-Running Benchmarks
+Example expected output:
 
-Run performance benchmarks via CLI:
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
 
-mvn compile exec:java -Dexec.mainClass="cli.BenchmarkRunner"
+📊 Benchmark Example
+Array Size	Data Type	Time (ms)	Comparisons	Swaps	Array Accesses
+1000	Random	8.12	499,500	999	999,000
+1000	Sorted	4.03	499,500	0	999,000
+1000	Reversed	9.52	499,500	999	999,000
+🧰 Dependencies
 
-The benchmark executes the algorithm on arrays of different sizes (100, 1000, 10000) and prints:
+    Java 17+
 
-    Execution time in milliseconds
+    JUnit 5 (for tests)
 
-    Number of comparisons
+    (Optional) Maven for build automation and dependency management
 
-    Number of swaps
+Example Maven dependency for JUnit:
 
-    Number of array accesses
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.9.3</version>
+    <scope>test</scope>
+</dependency>
 
-Example Output
+👨‍💻 Author
 
-n=100    | time=0.2 ms   | Comparisons=4950, Swaps=45, ArrayAccesses=9900
-n=1000   | time=15.3 ms  | Comparisons=499500, Swaps=450, ArrayAccesses=999000
-n=10000  | time=1500 ms  | Comparisons=49995000, Swaps=4500, ArrayAccesses=99990000
-
-Notes
-
-    The implementation is in-place and uses constant auxiliary space.
-
-    Performance metrics allow empirical validation of algorithm complexity (Θ(n²) average/worst case).
-
-    Designed for peer review, allowing evaluation of code efficiency, readability, and optimization potential.
-
-    Edge cases like null or arrays of length ≤1 are safely handled.
+Rafael Shayekhov
+SE-2425
